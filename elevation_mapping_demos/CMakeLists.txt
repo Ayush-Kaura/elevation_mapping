@@ -1,13 +1,24 @@
-cmake_minimum_required(VERSION 3.5.1)
+cmake_minimum_required(VERSION 3.5)
 project(elevation_mapping_demos)
 
-## Find catkin macros and libraries
-find_package(catkin REQUIRED COMPONENTS
-  elevation_mapping
-  grid_map_rviz_plugin
-  rviz
-)
+# Default to C99
+if(NOT CMAKE_C_STANDARD)
+  set(CMAKE_C_STANDARD 99)
+endif()
 
+# Default to C++14
+if(NOT CMAKE_CXX_STANDARD)
+  set(CMAKE_CXX_STANDARD 14)
+endif()
+
+if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+  add_compile_options(-Wall -Wextra -Wpedantic)
+endif()
+
+# find dependencies
+find_package(ament_cmake REQUIRED COMPONENTS
+  elevation_mapping
+  grid_map_rviz_plugin)
 
 ###################################
 ## catkin specific configuration ##
@@ -19,61 +30,21 @@ find_package(catkin REQUIRED COMPONENTS
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 
-catkin_package(
-  #INCLUDE_DIRS include
-  #LIBRARIES
-  CATKIN_DEPENDS
-    elevation_mapping
-    grid_map_rviz_plugin
-    rviz
-  #DEPENDS
-)
-
-#############
-## Install ##
-#############
-
-install(DIRECTORY config doc launch rviz sample_data
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
-)
-
-install(PROGRAMS scripts/tf_to_pose_publisher.py
-  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-)
-
-##############
-##   Test   ##
-##############
-if(CATKIN_ENABLE_TESTING)
-  find_package(catkin REQUIRED
-    COMPONENTS
-    roslaunch
-    )
-  catkin_add_gtest(test_${PROJECT_NAME}
-    test/empty_test.cpp
-  )
-
-  target_include_directories(test_${PROJECT_NAME}
-    PRIVATE
-      include
-    SYSTEM PUBLIC
-      ${catkin_INCLUDE_DIRS}
-  )
-
-  target_link_libraries(test_${PROJECT_NAME}
-    ${catkin_LIBRARIES}
-    gtest_main
-  )
-  roslaunch_add_file_check(launch)
-
-  ###################
-  ## Code_coverage ##
-  ###################
-  find_package(cmake_code_coverage QUIET)
-  if(cmake_code_coverage_FOUND)
-    add_gtest_coverage(
-      TEST_BUILD_TARGETS
-        test_${PROJECT_NAME}
-    )
-  endif()
+if(BUILD_TESTING)
+  find_package(ament_lint_auto REQUIRED)
+  # the following line skips the linter which checks for copyrights
+  # uncomment the line when a copyright and license is not present in all source files
+  #set(ament_cmake_copyright_FOUND TRUE)
+  # the following line skips cpplint (only works in a git repo)
+  # uncomment the line when this package is not in a git repo
+  #set(ament_cmake_cpplint_FOUND TRUE)
+  ament_lint_auto_find_test_dependencies()
 endif()
+
+# Install launch files.
+install(DIRECTORY
+  launch config rviz
+  DESTINATION share/${PROJECT_NAME}/
+)
+
+ament_package()

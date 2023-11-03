@@ -1,19 +1,30 @@
 elevation_mapping:
-  ros__parameter:
+  ros__parameters:
     input_sources: ["ground_truth_cloud"] # A name to identify the input source
 
     ground_truth_cloud:
       type: pointcloud # Supported types: pointcloud
-      topic: /points
+      topic: /camera/depth/color/points
       queue_size: 1
       publish_on_update: true # Whether to publish the elevation map after a callback from this source.
       sensor_processor:
-        type: perfect
+        ignore_points_above: .inf
+        ignore_points_below: -.inf
+        type: structured_light
+        cutoff_min_depth: 0.1
+        cutoff_max_depth: 2.8
+        normal_factor_a: 0.001063
+        normal_factor_b:  0.003949
+        normal_factor_c: 0.0
+        normal_factor_d: 0.0008278
+        normal_factor_e: 1.0
+        lateral_factor: 0.01576 # approx 1 deg
+
     map_frame_id: "map"
-    robot_base_frame_id: "base"
+    robot_base_frame_id: "camera_depth_optical_frame"
     robot_pose_with_covariance_topic: "" # Leaving this empty skipps pose covariance updates.
     robot_pose_cache_size: 200
-    track_point_frame_id: "base"
+    track_point_frame_id: "camera_depth_optical_frame"
     track_point_x: 0.0
     track_point_y: 0.0
     track_point_z: 0.0

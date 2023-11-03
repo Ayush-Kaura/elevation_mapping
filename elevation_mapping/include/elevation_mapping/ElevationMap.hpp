@@ -314,7 +314,9 @@ class ElevationMap {
   rclcpp::Subscription<grid_map_msgs::msg::GridMap>::SharedPtr underlyingMapSubscriber_;
 
   //! Initial ros time
-  rclcpp::Time initialTime_;
+  rclcpp::Time initialTime_ {0, 0, RCL_ROS_TIME};
+
+
 
   //! Parameters. Are set through the ElevationMapping class.
   double minVariance_;

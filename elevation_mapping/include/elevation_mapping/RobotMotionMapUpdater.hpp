@@ -83,7 +83,7 @@ class RobotMotionMapUpdater {
   std::shared_ptr<rclcpp::Node> nodeHandle_;
 
   //! Time of the previous update.
-  rclcpp::Time previousUpdateTime_;
+  rclcpp::Time previousUpdateTime_ {0, 0, RCL_ROS_TIME};
 
   //! Previous robot pose.
   Pose previousRobotPose_;
