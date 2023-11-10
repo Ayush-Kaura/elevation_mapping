@@ -2,9 +2,9 @@
 
   <!-- Elevation mapping node -->
   <node pkg="elevation_mapping" exec="elevation_mapping" name="elevation_mapping" output="screen">
-    <param from="/home/ayush/Perception/elevation_map_ws/src/elevation_mapping/elevation_mapping_demos/config/robots/simple_demo_robot.yaml" />
-    <param from="/home/ayush/Perception/elevation_map_ws/src/elevation_mapping/elevation_mapping_demos/config/elevation_maps/simple_demo_map.yaml" />
-    <param from="/home/ayush/Perception/elevation_map_ws/src/elevation_mapping/elevation_mapping_demos/config/postprocessing/postprocessor_pipeline.yaml" />
+    <param from="$(env HOME)/ros2_ws/src/elevation_mapping/elevation_mapping_demos/config/robots/simple_demo_robot.yaml" />
+    <param from="$(env HOME)/ros2_ws/src/elevation_mapping/elevation_mapping_demos/config/elevation_maps/simple_demo_map.yaml" />
+    <param from="$(env HOME)/ros2_ws/src/elevation_mapping/elevation_mapping_demos/config/postprocessing/postprocessor_pipeline.yaml" />
     <param name ="/use_sim_time" value="false"/>
   </node>
 
@@ -12,11 +12,10 @@
   <!-- Setup a transform between the world and the robot -->
   <node pkg="tf2_ros" exec="static_transform_publisher" name="world_to_robot" args="0.0 0.0 0.0 1.57 0.0 0.0 /map /camera_link"/>
 
-  <!-- Launch visualizations for the resulting elevation map -->
-  <!-- <include file="/home/ayush/Perception/elevation_map_ws/src/elevation_mapping/elevation_mapping_demos/launch/visualization.launch" /> -->
+  <!-- Launch visualizations for the resulting elevation map Not Publishing correctly-->
+  <!-- <include file="$(env HOME)/ros2_ws/src/elevation_mapping/elevation_mapping_demos/launch/visualization.launch" /> -->
 
   <!-- Launch RViz with the demo configuration -->
-  <node name="rviz2" pkg="rviz2" exec="rviz2" args="-d /home/ayush/Perception/elevation_map_ws/src/elevation_mapping/elevation_mapping_demos/rviz/elevation_map_visualization_ros2.rviz" />
+  <node name="rviz2" pkg="rviz2" exec="rviz2" args="-d $(env HOME)/ros2_ws/src/elevation_mapping/elevation_mapping_demos/rviz/elevation_map_visualization_ros2.rviz" />
 
 </launch>
-
