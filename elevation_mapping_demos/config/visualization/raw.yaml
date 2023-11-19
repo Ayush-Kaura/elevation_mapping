@@ -1,19 +1,9 @@
 grid_map_visualization:
   ros__parameters:
     grid_map_topic: /elevation_map_raw
-    grid_map_visualizations: [elevation_cloud, sigma_cloud, map_region]
+
+    grid_map_visualizations: [elevation_cloud]
     elevation_cloud:
       type: point_cloud
       params:
         layer: elevation
-
-    sigma_cloud:
-      type: point_cloud
-      params:
-        layer: two_sigma_bound
-
-    map_region:
-      type: map_region
-      params:
-        color: 16777215
-        line_width: 0.003

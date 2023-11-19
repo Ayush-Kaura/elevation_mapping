@@ -4,7 +4,7 @@
     <param from="/home/ayush/Perception/elevation_map_ws/src/elevation_mapping/elevation_mapping_demos/config/visualization/fused.yaml" />
   </node> -->
   <node pkg="grid_map_visualization" exec="grid_map_visualization" name="elevation_map_raw_visualization" output="screen">
-    <!-- <param name="grid_map_topic" value="/elevation_mapping/elevation_map_raw" /> -->
+    <param name="grid_map_topic" value="/elevation_map_raw" />
     <param from="/home/ayush/Perception/elevation_map_ws/src/elevation_mapping/elevation_mapping_demos/config/visualization/raw.yaml" />
   </node>
 </launch>
